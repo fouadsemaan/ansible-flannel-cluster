@@ -8,8 +8,8 @@ Before=docker.service
 
 [Service]
 Type=notify
-{% if flannel_set_etcd_cider_value is defined and flannel_set_etcd_cider_command is defined %}
-ExecStartPre={{flannel_set_etcd_cider_command}} {{flannel_set_etcd_cider_value}}
+{% if flannel_set_etcd_cidr_value is defined and flannel_set_etcd_cidr_command is defined %}
+ExecStartPre={{flannel_set_etcd_cidr_command}} {{flannel_set_etcd_cidr_value}}
 {% endif %}
 EnvironmentFile=/etc/flannel/options.env
 ExecStart=/usr/bin/flanneld \

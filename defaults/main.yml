@@ -23,5 +23,5 @@ flannel_etcd_prefix: /k8s/network
 flannel_iface: "eth0"
 
 #option to set flannel cidr at startup or as a separate manual step
-#flannel_set_etcd_cider_value: "'{\"Network\":\"10.255.0.0/16\",\"Backend\":{\"type\":\"vxlan\"}'" 
-#flannel_set_etcd_cider_command: /usr/local/bin/etcdctl set {{flannel_etcd_prefix}}/config
+#flannel_set_etcd_cidr_value: "'{\"Network\":\"10.255.0.0/16\",\"Backend\":{\"type\":\"vxlan\"}}'" 
+#flannel_set_etcd_cidr_command: /usr/local/bin/etcdctl set {{flannel_etcd_prefix}}/config
