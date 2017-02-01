@@ -1,0 +1,27 @@
+---
+flannel_user: flannel
+flannel_group: flannel
+flannel_data_dir: /var/lib/flanneld
+flannel_etcdctl: /usr/local/bin/etcdctl
+
+
+flannel_secure: True
+flannel_pki_dir: "~/pki-dir"
+flannel_pki_key_suffix: '-key.pem'
+flannel_pki_cert_suffix: '.pem'
+
+flannel_network_iface : eth0
+flannel_cluster_name : test-cluster-name
+flannel_etcd_endpoints_master: etcd-master 
+flannel_init_system: systemd
+flannel_launch: True
+
+flannel_etcd_endpoints_scheme: https
+flannel_etcd_endpoints_ip: "127.0.0.1"
+flannel_etcd_endpoints_port: "2379"
+flannel_etcd_prefix: /k8s/network
+flannel_iface: "127.0.0.1"
+
+#option to set flannel cidr at startup or as a separate manual step
+#flannel_set_etcd_cider_value: '{"Network":"10.255.0.0/16","Backend":{"type":"vxlan"}}'
+#flannel_set_etcd_cider_command: /usr/local/bin/etcdctl set {{flannel_etcd_prefix}}/config

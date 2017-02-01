@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Fouad Semaan 
+  description: configures a flannel cluster
+  license:
+    - MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - xenial
+  galaxy_tags:
+    - flannel 
+
+dependencies:
+  - role: andrewrothstein.flannel 
+    version: v2.0.0
