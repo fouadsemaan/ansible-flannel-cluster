@@ -12,7 +12,7 @@ Type=notify
 ExecStartPre={{flannel_set_etcd_cidr_command}} {{flannel_set_etcd_cidr_value}}
 {% endif %}
 EnvironmentFile=/etc/flannel/options.env
-ExecStart=/usr/bin/flanneld \
+ExecStart=/usr/local/bin/flanneld \
           -etcd-endpoints $FLANNEL_ETCD_ENDPOINTS \
           -etcd-cafile $FLANNEL_ETCD_CAFILE \
           -etcd-certfile $FLANNEL_ETCD_CERTFILE \
