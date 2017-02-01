@@ -2,54 +2,45 @@
 - name: create flannel group
   become: yes
   become_user: root
-  group: name={{flannel_group}} state=present
+  group:
+    name: '{{flannel_group}}'
+    state: present
   
 - name: create flannel user
   become: yes
   become_user: root
-  user: >-
-    name={{flannel_user}}
-    group={{flannel_group}}
-    home={{flannel_data_dir}}
-    state=present
+  user:
+    name: '{{flannel_user}}'
+    group: '{{flannel_group}}'
+    home: '{{flannel_data_dir}}'
+    state: present
 
 - name: create dirs...
   become: yes
   become_user: root
-  file: >-
-    state=directory
-    path={{item}}
-    owner={{flannel_user}}
-    group={{flannel_group}}
-    mode=0755
   with_items:
-    - /etc/flannel
+    - '{{flannel_conf_dir}}'
     - '{{flannel_cluster_pki_dir}}'
-    - /run/flannel
+    - '{{flannel_run_dir}}'
+  file:
+    state: directory
+    path: '{{item}}'
+    owner: '{{flannel_user}}'
+    group: '{{flannel_group}}'
+    mode: '0755'
+
+- include: pki.yml
     
-- name: install keys/certs
-  when: flannel_secure
+- name: configurate flannel...
   become: yes
   become_user: root
   with_items:
-    - { f: '{{flannel_pki_key_src}}', d: '{{flannel_pki_key_dest}}', m: '0400' }
-    - { f: '{{flannel_pki_cert_src}}', d: '{{flannel_pki_cert_dest}}', m: '0600'}
-    - { f: '{{flannel_pki_ca_cert_src}}', d: '{{flannel_pki_ca_cert_dest}}', m: '0600' }
-  copy: >-
-    src={{item.f}}
-    dest={{item.d}}
-    owner={{flannel_user}}
-    group={{flannel_group}}
-    mode={{item.m}}
+    - options.env
+  template:
+    src: '{{item}}.j2'
+    dest: '{{flannel_conf_dir}}/{{item}}'
+    owner: '{{flannel_user}}'
+    group: '{{flannel_group}}'
+    mode: '0644'
 
-- name: install flannel.service configuration
-  become: yes
-  become_user: '{{flannel_user}}'
-  template: >-
-    src={{item}}.j2
-    dest=/{{item}}
-    mode=0644
-  with_items:
-    - etc/flannel/options.env
-
-- include: '{{flannel_init_system}}.yml'
+- include: '{{flannel_init_system|default("systemd")}}.yml'
