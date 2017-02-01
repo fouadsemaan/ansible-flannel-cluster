@@ -2,7 +2,7 @@ fouadsemaan.flannel-cluster
 ===========================
 
 Configures a flannel cluster. 
-Runs a flannel daemon on each host in group flannel-group.
+Runs a flannel daemon on each host in group flannel-group against an existing etcd-cluster.
 
 Requirements
 ------------
