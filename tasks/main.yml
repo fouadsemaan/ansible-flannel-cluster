@@ -36,10 +36,13 @@
   become: yes
   become_user: root
   with_items:
-    - options.env
+    - f: options.env
+      d: '{{flannel_conf_dir}}'
+    - f: flanneld.sh
+      d: /etc/profile.d
   template:
-    src: '{{item}}.j2'
-    dest: '{{flannel_conf_dir}}/{{item}}'
+    src: '{{item.f}}.j2'
+    dest: '{{item.d}}/{{item.f}}'
     owner: '{{flannel_user}}'
     group: '{{flannel_group}}'
     mode: '0644'

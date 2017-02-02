@@ -1,0 +1,9 @@
+export FLANNEL_ETCD_ENDPOINTS="{{flannel_etcd_endpoints}}"
+export FLANNEL_ETCD_PREFIX="{{flannel_etcd_prefix}}"
+
+{% if flannel_secure %}
+export FLANNEL_ETCD_TLS_ARGS="-etcd-cafile {{flannel_pki_ca_cert_dest}} -etcd-certfile {{flannel_pki_cert_dest}} -etcd-keyfile {{flannel_pki_key_dest}}"
+export FLANNEL_ETCDCTL_TLS_ARGS="--cert-file {{flannel_pki_cert_dest}} --key-file {{flannel_pki_key_dest}} --ca-file {{flannel_pki_ca_cert_dest}}"
+{% endif %}
+
+export FLANNEL_IFACE="{{flannel_network_iface}}"
