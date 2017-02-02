@@ -13,19 +13,14 @@ flannel_pki_cert_suffix: .pem
 
 flannel_network_iface : eth0
 flannel_cluster_name : test-cluster-name
-flannel_etcd_endpoints_master: etcd-master 
+#option to set flannel cidr at startup as a separate manual step
+flannel_cidr:
+  Network: "10.255.0.0/16"
+  Backend: {type: vxlan}
 
 flannel_launch: True
 
-flannel_etcd_endpoints_scheme: https
-flannel_etcd_endpoints_ip: '127.0.0.1'
-flannel_etcd_endpoints_port: 2379
+flannel_etcd_master_group_name: etcd-master 
+flannel_etcd_port: 2379
 flannel_etcd_prefix: /k8s/network
-flannel_iface: "127.0.0.1"
 
-#option to set flannel cidr at startup as a separate manual step
-#flannel_cidr:
-#  value:
-#    Network: "10.255.0.0/16"
-#    Backend:
-#      type: vxlan

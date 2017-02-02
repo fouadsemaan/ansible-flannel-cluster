@@ -9,17 +9,21 @@ Before=docker.service
 [Service]
 Type=notify
 EnvironmentFile={{flannel_conf_dir}}/options.env
+
 {% if flannel_cidr is defined %}
-ExecStartPre={{flannel_etcdctl}} set $FLANNEL_ETCD_PREFIX/config $FLANNEL_CIDR
+ExecStartPre={{flannel_etcdctl}} \
+   --endpoints $FLANNEL_ETCD_ENDPOINTS \
+   $FLANNEL_ETCDCTL_TLS_ARGS \
+   set \
+   $FLANNEL_ETCD_PREFIX/config \
+   "{\"Network\":\"{{flannel_cidr.Network}}\",\"Backend\":{\"type\":\"{{flannel_cidr.Backend.type}}\"}}"
 {% endif %}
-ExecStart=/usr/bin/flanneld \
+
+ExecStart=/usr/local/bin/flanneld \
           -etcd-endpoints $FLANNEL_ETCD_ENDPOINTS \
-          -etcd-cafile $FLANNEL_ETCD_CAFILE \
-          -etcd-certfile $FLANNEL_ETCD_CERTFILE \
-          -etcd-keyfile $FLANNEL_ETCD_KEYFILE \
           -etcd-prefix $FLANNEL_ETCD_PREFIX \
           -iface $FLANNEL_IFACE \
-          -public-ip $FLANNEL_PUBLIC_IP
+	  $FLANNEL_ETCD_TLS_ARGS
           
 Restart=on-failure
 

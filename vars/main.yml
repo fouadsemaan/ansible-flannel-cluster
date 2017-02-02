@@ -1,22 +1,18 @@
 ---
 flannel_scheme : "{% if flannel_secure %}https{% else %}http{% endif %}"
-flannel_etcd_endpoints: "{% for host in groups[flannel_etcd_endpoints_master] %}{{flannel_scheme}}://{{hostvars[host]['ansible_' + flannel_network_iface]['ipv4']['address']}}:2379{% if not loop.last %},{% endif %}{% endfor %}"
+flannel_etcd_endpoints: "{% for host in groups[flannel_etcd_master_group_name] %}{{flannel_scheme}}://{{hostvars[host]['ansible_' + flannel_network_iface]['ipv4']['address']}}:{{flannel_etcd_port}}{% if not loop.last %},{% endif %}{% endfor %}"
 
-flannel_public_ipv4: '{{ hostvars[inventory_hostname]["ansible_" + flannel_network_iface]["ipv4"]["address"]}}'
+flannel_cluster_data_dir : '{{flannel_data_dir}}/{{flannel_cluster_name}}/data'
 
-flannel_cluster_data_dir : '{{flannel_data_dir}}/{{flannel_cluster_name}}.flannel'
-flannel_cluster_pki_dir : '{{flannel_data_dir}}/{{flannel_cluster_name}}.pki'
-
+flannel_cluster_pki_dir : '{{flannel_conf_dir}}/pki'
 flannel_pki_key_file : '{{inventory_hostname}}{{flannel_pki_key_suffix}}'
 flannel_pki_key_src: '{{flannel_pki_dir}}/{{flannel_pki_key_file}}'
-flannel_pki_key_dest : '{{flannel_cluster_pki_dir}}/{{flannel_pki_key_file}}'
+flannel_pki_key_dest : '{{flannel_cluster_pki_dir}}/key.pem'
 
 flannel_pki_cert_file : '{{inventory_hostname}}{{flannel_pki_cert_suffix}}'
 flannel_pki_cert_src: '{{flannel_pki_dir}}/{{flannel_pki_cert_file}}'
-flannel_pki_cert_dest : '{{flannel_cluster_pki_dir}}/{{flannel_pki_cert_file}}'
+flannel_pki_cert_dest : '{{flannel_cluster_pki_dir}}/cert.pem'
 
 flannel_pki_ca_file : 'ca{{flannel_pki_cert_suffix}}'
 flannel_pki_ca_cert_src: '{{flannel_pki_dir}}/{{flannel_pki_ca_file}}'
-flannel_pki_ca_cert_dest : '{{flannel_cluster_pki_dir}}/{{flannel_pki_ca_file}}'
-
-
+flannel_pki_ca_cert_dest : '{{flannel_cluster_pki_dir}}/ca.pem'

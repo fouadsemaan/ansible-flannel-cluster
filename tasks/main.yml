@@ -30,6 +30,7 @@
     mode: '0755'
 
 - include: pki.yml
+  when: flannel_secure
     
 - name: configurate flannel...
   become: yes
