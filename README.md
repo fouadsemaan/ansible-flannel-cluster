@@ -1,4 +1,4 @@
-fouadsemaan.flannel-cluster
+andrewrothstein.flannel-cluster
 ===========================
 
 Configures a flannel cluster. 
@@ -22,20 +22,23 @@ See [meta/main.yml](meta/main.yml)
 Example Playbook
 ----------------
 
-inventory.ini
 ```ini
-[flannel-group]
+# inventory.ini
+[flannel-master]
+host[1:k].test
+
+[flannel]
 host[1:n].test
 
 [etcd-master]
-host[1:m].test
+host[1:k].test
 ```
 
-in your playbook:
 ```yml
-- hosts: flannel-group 
+# playbook.yml
+- hosts: flannel
   roles:
-    - fouadsemaan.flannel-cluster 
+    - andrewrothstein.flannel-cluster 
 ```
 
 License
@@ -46,4 +49,5 @@ MIT
 Author Information
 ------------------
 
-Fouad Semaan semaanfouad@gmail.com
+* Fouad Semaan <semaanfouad@gmail.com>
+* Andrew Rothstein <andrew.rothstein@gmail.com>
