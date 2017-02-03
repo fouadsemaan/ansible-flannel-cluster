@@ -1,8 +1,10 @@
 andrewrothstein.flannel-cluster
 ===========================
 
-Configures a flannel cluster. 
-Runs a flannel daemon on each host in group flannel-group against an existing etcd-cluster.
+* Configures a TLS secured flannel cluster
+* Installs flannel on each host in the ```flannel``` group
+* Runs a flanneld server on each host in the ```flannel-master``` group
+* Finds the etcd cluster through the ```etcd-master``` group 
 
 Requirements
 ------------
@@ -38,7 +40,7 @@ host[1:k].test
 # playbook.yml
 - hosts: flannel
   roles:
-    - andrewrothstein.flannel-cluster 
+    - role: andrewrothstein.flannel-cluster 
 ```
 
 License
