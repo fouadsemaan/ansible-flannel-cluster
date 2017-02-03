@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+{{flannel_etcdctl}} \
+    --endpoints $FLANNEL_ETCD_ENDPOINTS \
+    $FLANNEL_ETCDCTL_TLS_ARGS \
+    set \
+    $FLANNEL_ETCD_PREFIX/config < {{flannel_conf_dir}}/flannel-config.json

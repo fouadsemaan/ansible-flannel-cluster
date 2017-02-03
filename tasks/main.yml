@@ -40,11 +40,16 @@
       d: '{{flannel_conf_dir}}'
     - f: flanneld.sh
       d: /etc/profile.d
+    - f: flannel-config.json
+      d: '{{flannel_conf_dir}}'
+    - f: flanneld-init-etcd.sh
+      d: /usr/local/bin
+      m: '0755'
   template:
     src: '{{item.f}}.j2'
     dest: '{{item.d}}/{{item.f}}'
     owner: '{{flannel_user}}'
     group: '{{flannel_group}}'
-    mode: '0644'
+    mode: '{{item.m|default("0644")}}'
 
 - include: '{{flannel_init_system|default("systemd")}}.yml'

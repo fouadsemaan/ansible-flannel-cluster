@@ -7,3 +7,4 @@ export FLANNEL_ETCDCTL_TLS_ARGS="--cert-file {{flannel_pki_cert_dest}} --key-fil
 {% endif %}
 
 export FLANNEL_IFACE="{{flannel_network_iface}}"
+export FLANNEL_CIDR='{{flannel_cidr|to_json}}'

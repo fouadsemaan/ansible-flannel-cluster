@@ -15,8 +15,11 @@ flannel_network_iface : eth0
 flannel_cluster_name : test-cluster-name
 #option to set flannel cidr at startup as a separate manual step
 flannel_cidr:
-  Network: "10.255.0.0/16"
-  Backend: {type: vxlan}
+  Network: '10.255.0.0/16'
+  SubnetLen: 24
+  Backend:
+    Type: vxlan
+    VNI: 1
 
 flannel_launch: True
 

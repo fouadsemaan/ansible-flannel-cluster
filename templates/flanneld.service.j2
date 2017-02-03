@@ -5,20 +5,15 @@ After=network-online.target
 Wants=network-online.target
 After=etcd.service
 Before=docker.service
+After=etcd.service
 
 [Service]
 Type=notify
 EnvironmentFile={{flannel_conf_dir}}/options.env
 
 {% if flannel_cidr is defined %}
-ExecStartPre={{flannel_etcdctl}} \
-   --endpoints $FLANNEL_ETCD_ENDPOINTS \
-   $FLANNEL_ETCDCTL_TLS_ARGS \
-   set \
-   $FLANNEL_ETCD_PREFIX/config \
-   "{\"Network\":\"{{flannel_cidr.Network}}\",\"Backend\":{\"type\":\"{{flannel_cidr.Backend.type}}\"}}"
+ExecStartPre=-/usr/local/bin/flanneld-init-etcd.sh
 {% endif %}
-
 ExecStart=/usr/local/bin/flanneld \
           -etcd-endpoints $FLANNEL_ETCD_ENDPOINTS \
           -etcd-prefix $FLANNEL_ETCD_PREFIX \
