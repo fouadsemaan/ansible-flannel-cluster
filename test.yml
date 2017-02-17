@@ -2,3 +2,4 @@
 - hosts: localhost 
   roles:
     - role: '{{playbook_dir}}'
+      flannel_pki_dir: '{{playbook_dir}}'
