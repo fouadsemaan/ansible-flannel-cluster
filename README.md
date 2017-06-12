@@ -1,5 +1,6 @@
 andrewrothstein.flannel-cluster
 ===========================
+[![Build Status](https://travis-ci.org/andrewrothstein/ansible-flannel-cluster.svg?branch=master)](https://travis-ci.org/andrewrothstein/ansible-flannel-cluster)
 
 * Configures a TLS secured flannel cluster
 * Installs flannel on each host in the ```flannel``` group
@@ -25,7 +26,7 @@ Example Playbook
 ----------------
 
 ```ini
-# inventory.ini
+# example inventory
 [flannel-master]
 host[1:k].test
 

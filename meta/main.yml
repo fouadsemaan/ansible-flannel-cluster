@@ -8,16 +8,21 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - all
+        - 7
     - name: Fedora
       versions:
-        - all
+        - 23
+        - 24
+        - 25
     - name: Ubuntu
       versions:
         - xenial
+    - name: Debian
+      versions:
+        - jessie
   galaxy_tags:
     - flannel 
 
 dependencies:
   - role: andrewrothstein.flannel 
-    version: v2.0.0
+    version: v2.0.1

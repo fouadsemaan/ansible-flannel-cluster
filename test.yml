@@ -2,5 +2,11 @@
 - hosts: localhost 
   roles:
     - role: '{{playbook_dir}}'
-      flannel_pki_dir: '{{playbook_dir}}'
+      flannel_pki_dir: '{{playbook_dir}}/test-pki'
       flannel_launch: False
+      flannel_etcd_discover:
+        ty: inventory
+        port: 2379
+        group: etcd-master
+
+      

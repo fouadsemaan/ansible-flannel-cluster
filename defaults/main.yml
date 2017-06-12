@@ -8,7 +8,7 @@ flannel_etcdctl: /usr/local/bin/etcdctl
 
 flannel_secure: True
 flannel_pki_dir: ~/pki-dir
-flannel_pki_key_suffix: '-key.pem'
+flannel_pki_key_suffix: -key.pem
 flannel_pki_cert_suffix: .pem
 
 flannel_network_iface : eth0
@@ -23,7 +23,22 @@ flannel_cidr:
 
 flannel_launch: True
 
-flannel_etcd_master_group_name: etcd-master 
-flannel_etcd_port: 2379
+# example statically discovering etcd...
+#flannel_etcd_discover:
+#  ty: static
+#  port: 2379
+#  hosts:
+#    - etcd-01.example.org
+#    - etcd-02.example.org
+#    - etcd-03.example.org
+
+# discovering etcd through an inventory group
+flannel_etcd_discover:
+  ty: inventory
+  port: 2379
+  group: etcd-master
+# to lookup IPs from host facts
+# interface: eth0
+  
 flannel_etcd_prefix: /k8s/network
 

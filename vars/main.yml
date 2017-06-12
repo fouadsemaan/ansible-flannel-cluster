@@ -1,6 +1,11 @@
 ---
-flannel_scheme : "{% if flannel_secure %}https{% else %}http{% endif %}"
-flannel_etcd_endpoints: "{% for host in groups[flannel_etcd_master_group_name] %}{{flannel_scheme}}://{{hostvars[host]['ansible_' + flannel_network_iface]['ipv4']['address']}}:{{flannel_etcd_port}}{% if not loop.last %},{% endif %}{% endfor %}"
+flannel_scheme : '{% if flannel_secure %}https{% else %}http{% endif %}'
+
+flannel_etcd_static_hosts: '{% if flannel_etcd_discover.ty == "static" %}{% for h in flannel_etcd_discover.hosts %}{{ flannel_scheme }}://{{h}}:{{flannel_etcd_discover.port}}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}'
+
+flannel_etcd_inventory_hosts: '{% if flannel_etcd_discover.ty == "inventory" %}{% for h in groups[flannel_etcd_discover.group] %}{{flannel_scheme}}://{% if flannel_etcd_discover.interface is defined %}{{hostvars[h]["ansible_" + flannel_etcd_discover.interface]["ipv4"]["address"]}}{% else %}{{h}}{% endif %}:{{flannel_etcd_discover.port}}{% if not loop.last %},{% endif %}{% endfor %}{% endif %}'
+
+flannel_etcd_endpoints: '{% if flannel_etcd_discover.ty == "static" %}{{flannel_etcd_static_hosts}}{% else %}{{flannel_etcd_inventory_hosts}}{% endif %}'
 
 flannel_cluster_data_dir : '{{flannel_data_dir}}/{{flannel_cluster_name}}/data'
 
